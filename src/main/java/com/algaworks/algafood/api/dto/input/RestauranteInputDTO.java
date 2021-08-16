@@ -4,9 +4,8 @@ import java.math.BigDecimal;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
-
-import com.sun.istack.NotNull;
 
 public class RestauranteInputDTO {
 
@@ -20,6 +19,10 @@ public class RestauranteInputDTO {
 	@Valid
 	@NotNull
 	private CozinhaIdInputDTO cozinha;
+
+	@Valid
+	@NotNull
+	private EnderecoInputDTO endereco;
 
 	public String getNome() {
 		return nome;
@@ -43,6 +46,14 @@ public class RestauranteInputDTO {
 
 	public void setCozinha(CozinhaIdInputDTO cozinha) {
 		this.cozinha = cozinha;
+	}
+
+	public EnderecoInputDTO getEndereco() {
+		return endereco;
+	}
+
+	public void setEndereco(EnderecoInputDTO endereco) {
+		this.endereco = endereco;
 	}
 
 }

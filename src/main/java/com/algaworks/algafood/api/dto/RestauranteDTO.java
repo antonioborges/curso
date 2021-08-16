@@ -2,6 +2,7 @@ package com.algaworks.algafood.api.dto;
 
 import java.math.BigDecimal;
 
+//DTO -> para saída de dados.
 public class RestauranteDTO {
 
 	private Long id;
@@ -11,6 +12,10 @@ public class RestauranteDTO {
 	private BigDecimal taxaFrete;
 
 	private CozinhaDTO cozinha;
+
+	private Boolean ativo;
+
+	private EnderecoDTO endereco;
 
 	public Long getId() {
 		return id;
@@ -42,6 +47,22 @@ public class RestauranteDTO {
 
 	public void setCozinha(CozinhaDTO cozinha) {
 		this.cozinha = cozinha;
+	}
+
+	public Boolean getAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(Boolean ativo) {
+		this.ativo = ativo;
+	}
+
+	public EnderecoDTO getEndereco() {
+		return endereco;
+	}
+
+	public void setEndereco(EnderecoDTO endereco) {
+		this.endereco = endereco;
 	}
 
 }

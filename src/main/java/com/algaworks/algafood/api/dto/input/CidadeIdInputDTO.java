@@ -2,7 +2,7 @@ package com.algaworks.algafood.api.dto.input;
 
 import javax.validation.constraints.NotNull;
 
-public class CozinhaIdInputDTO {
+public class CidadeIdInputDTO {
 
 	@NotNull
 	private Long id;

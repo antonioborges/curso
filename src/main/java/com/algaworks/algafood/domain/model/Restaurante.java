@@ -20,9 +20,7 @@ import javax.persistence.OneToMany;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import com.algaworks.algafood.core.validation.ValorZeroIncluiDescricao;
-
-@ValorZeroIncluiDescricao(valorField = "taxaFrete", descricaoField = "nome", descricaoObrigatoria = "Frete Grátis")
+//@ValorZeroIncluiDescricao(valorField = "taxaFrete", descricaoField = "nome", descricaoObrigatoria = "Frete Grátis")
 @Entity
 public class Restaurante {
 
@@ -30,25 +28,20 @@ public class Restaurante {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	// @NotBlank
 	@Column(nullable = false)
 	private String nome;
 
-	// @NotNull
-	// @PositiveOrZero
 	@Column(name = "taxa_frete", nullable = false)
 	private BigDecimal taxaFrete;
 
-	// @Valid
-	// na hora de validar cozinha user como Default cadastroRestaurante.
-	// @ConvertGroup(from = Default.class, to = Groups.CozinhaId.class)
-	// @NotNull
-	@ManyToOne // (fetch = FetchType.LAZY)
+	@ManyToOne // (fetch = FetchType.LAZY)	
 	@JoinColumn(name = "cozinha_id", nullable = false)
 	private Cozinha cozinha;
 
 	@Embedded
 	private Endereco endereco;
+
+	private Boolean ativo = Boolean.TRUE;
 
 	@CreationTimestamp
 	@Column(nullable = false, columnDefinition = "datetime")
@@ -70,13 +63,14 @@ public class Restaurante {
 
 	}
 
-	public Restaurante(Long id, String nome, BigDecimal taxaFrete, Cozinha cozinha, Endereco endereco,
+	public Restaurante(Long id, String nome, BigDecimal taxaFrete, Cozinha cozinha, Endereco endereco, Boolean ativo,
 			OffsetDateTime dataCadastro, OffsetDateTime dataAtualizacao) {
 		this.id = id;
 		this.nome = nome;
 		this.taxaFrete = taxaFrete;
 		this.cozinha = cozinha;
 		this.endereco = endereco;
+		this.ativo = ativo;
 		this.dataCadastro = dataCadastro;
 		this.dataAtualizacao = dataAtualizacao;
 	}
@@ -121,6 +115,22 @@ public class Restaurante {
 		this.endereco = endereco;
 	}
 
+	public Boolean getAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(Boolean ativo) {
+		this.ativo = ativo;
+	}
+
+	public void setFormasPagamento(List<FormasPagamento> formasPagamento) {
+		this.formasPagamento = formasPagamento;
+	}
+
+	public void setProdutos(List<Produto> produtos) {
+		this.produtos = produtos;
+	}
+
 	public List<FormasPagamento> getFormasPagamento() {
 		return formasPagamento;
 	}
@@ -143,6 +153,14 @@ public class Restaurante {
 
 	public List<Produto> getProdutos() {
 		return produtos;
+	}
+
+	public void ativar() {
+		setAtivo(true);
+	}
+
+	public void inativar() {
+		setAtivo(false);
 	}
 
 	@Override
@@ -173,8 +191,9 @@ public class Restaurante {
 	@Override
 	public String toString() {
 		return "Restaurante [id=" + id + ", nome=" + nome + ", taxaFrete=" + taxaFrete + ", cozinha=" + cozinha
-				+ ", endereco=" + endereco + ", dataCadastro=" + dataCadastro + ", dataAtualizacao=" + dataAtualizacao
-				+ ", formasPagamento=" + formasPagamento + ", produtos=" + produtos + "]";
+				+ ", endereco=" + endereco + ", ativo=" + ativo + ", dataCadastro=" + dataCadastro
+				+ ", dataAtualizacao=" + dataAtualizacao + ", formasPagamento=" + formasPagamento + ", produtos="
+				+ produtos + "]";
 	}
 
 }

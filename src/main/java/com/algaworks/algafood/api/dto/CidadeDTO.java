@@ -1,9 +1,10 @@
 package com.algaworks.algafood.api.dto;
 
-public class CozinhaDTO {
+public class CidadeDTO {
 
 	private Long id;
 	private String nome;
+	private EstadoDTO estado;
 
 	public Long getId() {
 		return id;
@@ -20,4 +21,13 @@ public class CozinhaDTO {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+
+	public EstadoDTO getEstado() {
+		return estado;
+	}
+
+	public void setEstado(EstadoDTO estado) {
+		this.estado = estado;
+	}
+
 }

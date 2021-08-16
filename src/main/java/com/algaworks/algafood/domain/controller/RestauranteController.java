@@ -10,6 +10,7 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -96,16 +97,10 @@ public class RestauranteController {
 	public RestauranteDTO atualizar(@PathVariable Long restauranteId,
 			@RequestBody @Valid RestauranteInputDTO restauranteInputDTO) {
 		try {
-			// Restaurante restaurante =
-			// restauranteInputDisassembler.toDomainObject(restauranteInputDTO);
 
 			Restaurante restauranteAtual = restauranteService.buscarOuFalhar(restauranteId);
 
 			restauranteInputDisassembler.copyToDomainObject(restauranteInputDTO, restauranteAtual);
-
-			// BeanUtils.copyProperties(restaurante, restauranteAtual, "id",
-			// "formasPagamento", "endereco", "dataCadastro",
-			// "produtos");
 
 			return restauranteDTOAssembler.toDTO(restauranteService.salvar(restauranteAtual));
 
@@ -114,9 +109,20 @@ public class RestauranteController {
 		}
 	}
 
-	@GetMapping(value = "/primeiro")
+	@GetMapping(value = "/primeiro")	
 	public Optional<Restaurante> restaurantePrimeiro() {
 		return restauranteRepository.buscarPrimeiro();
 	}
 
+	@PutMapping("/{restauranteId}/ativo")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void ativar(@PathVariable Long restauranteId) {
+		restauranteService.ativar(restauranteId);
+	}
+
+	@DeleteMapping("/{restauranteId}/ativo")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void inativar(@PathVariable Long restauranteId) {
+		restauranteService.inativar(restauranteId);
+	}
 }
